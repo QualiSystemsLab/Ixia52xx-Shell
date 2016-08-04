@@ -81,7 +81,7 @@ class Ixia52XxDriver (ResourceDriverInterface):
         for port in portsObj:
             portRequest = requests.get(url+'/ports/'+str(port['id']), auth=HTTPBasicAuth(un,pw), verify=False)
             portObj = json.loads(portRequest.text)
-            sub_resources.append(AutoLoadResource(model='Resource Port', name=portObj['default_name'], relative_address=str(port['id'])))
+            sub_resources.append(AutoLoadResource(model='NTO Port', name=portObj['default_name'], relative_address=str(port['id'])))
             attributes.append(AutoLoadAttribute(str(port['id']), 'Port Speed', portObj['media_type']))
             attributes.append(AutoLoadAttribute(str(port['id']), 'Serial Number', portObj['uuid']))
             attributes.append(AutoLoadAttribute(str(port['id']), 'Port Description', str(portObj['name']) + " " + str(portObj['description'])))

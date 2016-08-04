@@ -3,16 +3,13 @@
     <ShellAttributes>
     </ShellAttributes>
 
-    <ShellModel Family="Generic Resource">
+    <ShellModel Family="NTO">
         <ResourceModel Name="Ixia52Xx" Description="" SupportsConcurrentCommands="true" ImagePath="ixia.png">
             <AttachedAttributes>
                 <AttachedAttribute Name="User" IsOverridable="true" IsLocal="true">
                   <AllowedValues />
                 </AttachedAttribute>
                 <AttachedAttribute Name="Password" IsOverridable="true" IsLocal="true">
-                  <AllowedValues />
-                </AttachedAttribute>
-                <AttachedAttribute Name="Power Management" IsOverridable="true" IsLocal="true">
                   <AllowedValues />
                 </AttachedAttribute>
 
@@ -50,7 +47,6 @@
                 <AttributeValue Name="Model" Value="" />
 
                 <AttributeValue Name="CLI Connection Type" Value="Auto" />
-                <AttributeValue Name="Power Management" Value="False" />
               </AttributeValues>
             <ParentModels />
             <Drivers>

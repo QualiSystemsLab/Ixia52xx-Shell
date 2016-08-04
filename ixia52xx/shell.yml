@@ -1,7 +1,7 @@
 shell:
     name: Ixia52xx
-    author: Anonymous
-    email: info@quali.com
-    description: Describe the purpose of your CloudShell shell
+    author: Chris Grabosky (graboskyc)
+    email: chris.g@quali.com
+    description: Shell for the Ixia 52xx series network monitoring switch
     version: 0.1.0
     driver_name: Ixia52XxDriver
