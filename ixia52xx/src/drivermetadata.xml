@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Driver Description="Describe the purpose of your CloudShell shell" MainClass="driver.Ixia52XxDriver" Name="Ixia52XxDriver" Version="1.0.0">
+    <Layout>
+        <Category Name="Commands">
+            <Command Description="Just your regular example command" DisplayName="Example Command" Name="example_function" />
+            <Command Description="Just your regular example command with parameters" DisplayName="Command With Params"
+                     Name="example_function_with_params" >
+                <Parameters>
+                    <Parameter Name="user_param1" Type="String" Mandatory = "True" DefaultValue="Somem default"
+                               DisplayName="String Param" Description="Some example string input"/>
+                    <Parameter Name="user_param2" Type="Lookup" Mandatory = "True" AllowedValues="Yes,No"
+                               DefaultValue="Yes" DisplayName="Lookup Param" Description="Some example lookup input"/>
+                </Parameters>
+            </Command>
+
+        </Category>
+        <Category Name="Hidden Commands">
+            <Command Description="Discovers the resource structure and attributes" Name="get_inventory" />
+            <Command Description="Used by orchestration to save the state of the resource and returns the saved artifact details"
+                     Name="orcestration_save" >
+                <Parameters>
+                    <Parameter Name="mode" Type="Lookup" Mandatory = "False" DefaultValue="auto"
+                               Description="Some example string input" AllowedValues="auto,shallow,deep" />
+                    <Parameter Name="custom_params" Type="String" Mandatory = "False" DefaultValue=""
+                               Description="Optional additional custom information on how to create the saved artifact"/>
+                </Parameters>
+            </Command>
+            <Command Description="Restores a saved artifact previously saved by this Shell driver using the orchestration_save function"
+                     Name="orcestration_restore" >
+                <Parameters>
+                    <Parameter Name="saved_artifact_info" Type="String" Mandatory = "True"
+                               Description="The saved_artifact_info created by or compatible with this shell" AllowedValues="auto,shallow,deep" />
+                </Parameters>
+            </Command>
+        </Category>
+
+    </Layout>
+</Driver>

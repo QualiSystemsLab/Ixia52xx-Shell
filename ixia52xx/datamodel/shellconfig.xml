@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ShellsConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.qualisystems.com/ResourceManagement/ShellsConfigurationSchema.xsd">
+<ResourceTemplates>
+    <ResourceTemplate Name="Ixia52Xx" Model="Ixia52Xx" Driver="Ixia52XxDriver">
+        <Description></Description>
+        <AutoLoad Enable="true">
+            <Description>Description for autoload </Description>
+        </AutoLoad>
+        <Attributes>
+            <Attribute Name="User" Value="admin" />
+            <Attribute Name="Password" Value="" />
+            <Attribute Name="API Port" Value="9000" />
+            <Attribute Name="API Access" Value="https" />
+        </Attributes>
+    </ResourceTemplate>    
+</ResourceTemplates>
+</ShellsConfiguration>
