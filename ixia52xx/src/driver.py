@@ -31,38 +31,6 @@ class Ixia52XxDriver (ResourceDriverInterface):
         """
         pass
 
-    def example_function(self, context):
-        """
-        A simple example function
-        :param ResourceCommandContext context: the context the command runs on
-        """
-
-        un = context.resource.attributes["User"]
-        #pw = helpers.get_api_session().DecryptPassword(context.resource.attributes["Password"])
-        pw = "admin"
-        ip = context.resource.address
-        port = "9000"
-
-        url = ip+":"+port+"/api"
-
-        sub_resources = []
-        attributes = []
-
-        retstr = ""
-
-        # get all ports
-        portsRequest = requests.get(url+'/ports', auth=HTTPBasicAuth(un,pw), verify=False)
-        portsObj = json.loads(portsRequest.text)
-        for port in portsObj:
-            portRequest = requests.get(url+'/ports/'+str(port['id']), auth=HTTPBasicAuth(un,pw), verify=False)
-            portObj = json.loads(portRequest.text)
-            print str(port['id'])
-            retstr = retstr + "\n"+str(port['id'])
-            print portObj['media_type']
-            retstr = retstr + "\n"+portObj['media_type']
-
-        return retstr
-        pass
 
     def example_function_with_params(self, context, user_param1, user_param2):
         """
@@ -79,56 +47,6 @@ class Ixia52XxDriver (ResourceDriverInterface):
         """
         pass
 
-    def orcestration_restore(self, context, saved_artifact_info):
-        """
-        Restores a saved artifact previously saved by this Shell driver using the orchestration_save function
-        :param ResourceCommandContext context: the context the command runs on
-        :param str saved_artifact_info: The saved_artifact_info created by or compatible with this shell
-        """
-        '''
-        The saved_artifact json must conform to the save and restore standard
-        schema defined at: https://github.com/QualiSystems/sandbox_orchestration_standard/blob/master/save%20%26%20restore/saved_artifact_info.schema.json
-        You can find more information and examples examples in the spec document at
-         https://github.com/QualiSystems/sandbox_orchestration_standard/blob/master/save%20%26%20restore/save%20%26%20restore%20standard.md
-        Example JSON:
-        {
-
-          "saved_artifacts_info": {
-            "resource_name": "vcenter_01",
-            "created_date": "4647-09-23T10:03:24.330Z",
-            "restore_rules": {
-              "requires_sames_resource": true
-            },
-            "saved_artifact": {
-              "artifact_type": "vcenter_snapshot",
-              "identifier": "snapshot1"
-            }
-          }
-        }
-
-        '''
-
-        pass
-
-    def orcestration_save(self, context, mode, custom_params):
-        """
-        Saves the state of the resource and creates a saved artifact. The returned saved_artifact_info
-        must contain all necessary information to be able to restore it if passed to the orchestration_restore
-        function. This command is intended for API use only by sandbox orchestration scripts to implement
-        a save and restore workflow
-        :param ResourceCommandContext context: the context the command runs on
-        :param str mode: Can be one of three possible values 'shallow'|'deep'|'auto'
-        :param str custom_params: Optional additional custom information on how to create the saved artifact
-        :rtype: str
-        :return A saved_artifact json string
-        """
-        '''
-        The saved_artifact json must conform to the save and restore standard
-        schema defined at: https://github.com/QualiSystems/sandbox_orchestration_standard/blob/master/save%20%26%20restore/saved_artifact_info.schema.json
-        You can find more information and examples examples in the spec document at
-        https://github.com/QualiSystems/sandbox_orchestration_standard/blob/master/save%20%26%20restore/save%20%26%20restore%20standard.md
-        '''
-        pass
 
     def get_inventory(self, context):
         """
