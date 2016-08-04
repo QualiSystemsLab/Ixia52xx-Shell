@@ -105,7 +105,7 @@
     </AttributeInfo>
   </Attributes>
   <ResourceFamilies>
-    <ResourceFamily Name="Generic Resource" IsConnectable="false" IsLockedByDefault="true" Description="" IsSearchable="true" ResourceType="Resource">
+    <ResourceFamily Name="NTO" IsConnectable="false" IsLockedByDefault="true" Description="" IsSearchable="true" ResourceType="Resource">
       <AttachedAttributes>
       </AttachedAttributes>
       <AttributeValues>
@@ -119,7 +119,7 @@
       <AttachedAttributes />
       <AttributeValues />
       <Models>
-       <ResourceModel Name="Resource Port" Description="" SupportsConcurrentCommands="false">
+       <ResourceModel Name="NTO Port" Description="" SupportsConcurrentCommands="false">
          <AttachedAttributes>
            <AttachedAttribute Name="MAC Address" IsOverridable="true" IsLocal="true">
              <AllowedValues />
@@ -171,9 +171,6 @@
             <AttachedAttribute Name="Serial Number" IsOverridable="true" IsLocal="true">
               <AllowedValues />
             </AttachedAttribute>
-            <AttachedAttribute Name="Version" IsOverridable="true" IsLocal="true">
-              <AllowedValues />
-            </AttachedAttribute>
             <AttachedAttribute Name="Port Description" IsOverridable="true" IsLocal="true">
               <AllowedValues />
             </AttachedAttribute>
@@ -181,7 +178,6 @@
         <AttributeValues>
             <AttributeValue Name="Model" Value="" />
             <AttributeValue Name="Serial Number" Value="" />
-	    <AttributeValue Name="Version" Value="" />
             <AttributeValue Name="Port Description" Value="" />
         </AttributeValues>
 	    <ParentModels>
