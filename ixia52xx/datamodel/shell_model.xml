@@ -4,7 +4,7 @@
     </ShellAttributes>
 
     <ShellModel Family="NTO">
-        <ResourceModel Name="Ixia52Xx" Description="" SupportsConcurrentCommands="true" ImagePath="ixia.png">
+        <ResourceModel Name="Ixia52Xx" Description="" SupportsConcurrentCommands="true" ImagePath="ixia.png" >
             <AttachedAttributes>
                 <AttachedAttribute Name="User" IsOverridable="true" IsLocal="true">
                   <AllowedValues />

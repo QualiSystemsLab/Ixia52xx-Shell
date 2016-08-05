@@ -2,6 +2,7 @@
 <Driver Description="Describe the purpose of your CloudShell shell" MainClass="driver.Ixia52XxDriver" Name="Ixia52XxDriver" Version="1.0.0">
     <Layout>
         <Category Name="Commands">
+            <Command Description="Maps connections in this sandbox" Name="map_connections" DisplayName="Map Connections" />
             <Command Description="Just your regular example command with parameters" DisplayName="Command With Params"
                      Name="example_function_with_params" >
                 <Parameters>
@@ -11,7 +12,11 @@
                                DefaultValue="Yes" DisplayName="Lookup Param" Description="Some example lookup input"/>
                 </Parameters>
             </Command>
-
+            <Command Name="ApplyConnectivityChanges" DisplayName="ApplyConnectivityChanges" Tags="allow_unreserved">
+                    <Parameters>
+                      <Parameter Name="request" Type="String" Mandatory = "True" DefaultValue="" Description=""/>
+                    </Parameters>
+            </Command>
         </Category>
         <Category Name="Hidden Commands">
             <Command Description="Discovers the resource structure and attributes" Name="get_inventory" />

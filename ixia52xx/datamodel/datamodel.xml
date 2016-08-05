@@ -105,7 +105,7 @@
     </AttributeInfo>
   </Attributes>
   <ResourceFamilies>
-    <ResourceFamily Name="NTO" IsConnectable="false" IsLockedByDefault="true" Description="" IsSearchable="true" ResourceType="Resource">
+    <ResourceFamily Name="NTO" IsConnectable="false" IsLockedByDefault="true" Description="" IsSearchable="true" ResourceType="Resource" >
       <AttachedAttributes>
       </AttachedAttributes>
       <AttributeValues>
@@ -115,7 +115,7 @@
       </Models>
       <Categories />
     </ResourceFamily>
-    <ResourceFamily Name="Port" IsSearchable="true" IsConnectable="true" IsLockedByDefault="true">
+    <ResourceFamily Name="Port" IsSearchable="true" IsConnectable="true" IsLockedByDefault="true"  >
       <AttachedAttributes />
       <AttributeValues />
       <Models>

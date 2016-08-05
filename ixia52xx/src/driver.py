@@ -1,11 +1,11 @@
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
-from cloudshell.shell.core.driver_context import InitCommandContext, ResourceCommandContext, AutoLoadCommandContext, \
-    AutoLoadAttribute, AutoLoadResource, AutoLoadDetails
+from cloudshell.shell.core.driver_context import InitCommandContext, ResourceCommandContext, AutoLoadResource,  AutoLoadAttribute, AutoLoadDetails
 from cloudshell.api.cloudshell_api import CloudShellAPISession
 import requests
 from requests.auth import HTTPBasicAuth
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import json
+import inject
 
 
 class Ixia52XxDriver (ResourceDriverInterface):
@@ -40,6 +40,70 @@ class Ixia52XxDriver (ResourceDriverInterface):
         :param str user_param2: A user parameter
         """
         pass
+
+    def map_connections(self, context):
+        """
+        An example function that accepts two user parameters
+        :param ResourceCommandContext context: the context the command runs on
+        """
+
+        session = CloudShellAPISession(host=context.connectivity.server_address,
+                                       token_id=context.connectivity.admin_auth_token,
+                                       domain=context.reservation.domain)
+
+        retstr = ""
+
+        # for each connector
+        for conn in context.connectors:
+            if conn.alias != "Connected":
+                session
+                print conn.source + " to " + conn.target
+                retstr = "\n"+ conn.source + " to " + conn.target
+
+        return retstr
+
+        pass
+
+    # The ApplyConnectivityChanges function is intended to be used for using switches as connectivity providers
+    # for other devices. If the Switch shell is intended to be used a DUT only there is no need to implement it
+
+    def ApplyConnectivityChanges(self, context, request):
+        """
+        Configures VLANs on multiple ports or port-channels
+        :param ResourceCommandContext context: The context object for the command with resource and reservation info
+        :param str request: A JSON object with the list of requested connectivity changes
+        :return: a json object with the list of connectivity changes which were carried out by the switch
+        :rtype: str
+        """
+
+        session = CloudShellAPISession(host=context.connectivity.server_address,
+                                       token_id=context.connectivity.admin_auth_token,
+                                       domain="Global")
+        """
+        :type context: drivercontext.ResourceCommandContext
+        :type json: str
+        """
+        #Write request
+        requestJson = json.loads(request)
+        session.WriteMessageToReservationOutput(context.reservation.reservation_id,
+                                                      json.dumps(requestJson, indent=4, sort_keys=True))
+        session.WriteMessageToReservationOutput(context.reservation.reservation_id,
+                                                      "-------------------------------------")
+
+        ##Build Response
+        response = {"driverResponse":{"actionResults":[]}}
+
+        for actionResult in requestJson['driverRequest']['actions']:
+            actionResultTemplate = {"actionId":None, "type":None, "infoMessage":"", "errorMessage":"", "success":"True", "updatedInterface":"None"}
+            actionResultTemplate['type'] = str(actionResult['type'])
+            actionResultTemplate['actionId'] = str(actionResult['actionId'])
+            response["driverResponse"]["actionResults"].append(actionResultTemplate)
+
+        session.WriteMessageToReservationOutput(context.reservation.reservation_id, "Response \n" + json.dumps(response, indent=4, sort_keys=True))
+        return 'command_json_result=' + str(response) + '=command_json_result_end'
+
+        pass
+
 
     def _helper_function(self):
         """
