@@ -58,13 +58,70 @@ class Ixia52XxDriver (ResourceDriverInterface):
         response = {"driverResponse":{"actionResults":[]}}
 
 
+        pair = []
+        previousCid = ""
+
         for actionResult in requestJson['driverRequest']['actions']:
             actionResultTemplate = {"actionId":None, "type":None, "infoMessage":"", "errorMessage":"", "success":"True", "updatedInterface":"None"}
             actionResultTemplate['type'] = str(actionResult['type'])
             actionResultTemplate['actionId'] = str(actionResult['actionId'])
             response["driverResponse"]["actionResults"].append(actionResultTemplate)
 
+            # now for the crazy... the actions array is in pairs of endpoints, not a line/connection. so pack them up together
+            cid = actionResult["connectionId"]
 
+            #if its the same cid, add to the pair list
+            # if not the same, must be a new connector
+            if previousCid != cid:
+
+                previousCid = cid
+                pair = [actionResult["actionTarget"]["fullName"]]
+
+            else:
+                pair.append(actionResult["actionTarget"]["fullName"])
+                # check if not first run
+                if len(pair) == 2:
+                    src = pair[0]
+                    dst = pair[1]
+
+                    # make connector
+                    if (str(actionResult['type']) == "setVlan"):
+                        # add
+                        session.WriteMessageToReservationOutput(context.reservation.reservation_id, "Adding " + src + " to " + dst)
+
+                        pw = session.DecryptPassword(context.resource.attributes['Password']).Value
+                        un = context.resource.attributes["User"]
+                        ip = context.resource.address
+                        port = str(context.resource.attributes["API Port"])
+                        prefix = str(context.resource.attributes["API Access"])
+                        method = "POST"
+                        url = prefix+"://"+ip+":"+port+"/api/filters"
+
+                        postdata = {}
+                        postdata["connect_in_access_settings"] = {"policy":"ALLOW_ALL"}
+                        postdata["connect_out_access_settings"] = {"policy":"ALLOW_ALL"}
+                        #postdata["criteria"] = ""
+                        postdata["description"] = "CloudShell " + context.reservation.reservation_id
+                        #postdata["dest_port_group_list"] = ""
+                        postdata["dest_port_list"] = [dst.split("/")[1]]
+                        postdata["dynamic_filter_type"] = "BYPASS_FILTER"
+                        #postdata["keywords"] = ""
+                        postdata["match_count_unit"] = "PACKETS"
+                        postdata["mode"] = "PASS_ALL"
+                        postdata["modify_access_settings"] = {"policy":"ALLOW_ALL"}
+                        postdata["name"] = cid
+                        #postdata["snmp_tag"] = ""
+                        #postdata["source_port_group_list"] = ""
+                        postdata["source_port_list"] = [src.split("/")[1]]
+
+                        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+                        r = requests.post(url, auth=HTTPBasicAuth(un,pw), verify=False, data=postdata)
+                        session.WriteMessageToReservationOutput(context.reservation.reservation_id, r.text)
+                    elif (str(actionResult['type']) == "removeVlan"):
+                        # remove
+                        session.WriteMessageToReservationOutput(context.reservation.reservation_id, "Removing " + src + " to " + dst)
+                    else:
+                        session.WriteMessageToReservationOutput(context.reservation.reservation_id, "huh?")
 
         return 'command_json_result=' + str(response) + '=command_json_result_end'
 
